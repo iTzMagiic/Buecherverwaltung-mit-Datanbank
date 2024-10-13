@@ -1,5 +1,8 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /* Todo
 - Mehr Modularisieren die try-catch in Extra Module zum Überprüfen ob die Eingaben Valide sind
@@ -7,10 +10,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Library library = new Library();
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
         int choice = 0;
+
 
         while (running) {
             System.out.println("Willkommen zu der Bücherverwaltung.");

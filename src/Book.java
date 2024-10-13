@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 // Durch die Implementierung von "Serializable" ist es möglich die Klasse "Book" in Dateien zu speichern.
 public class Book implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
     /*
