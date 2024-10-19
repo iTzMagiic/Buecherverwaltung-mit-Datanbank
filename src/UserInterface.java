@@ -56,7 +56,9 @@ public class UserInterface {
                 System.out.println("Erscheinungsjahr: ");
                 yearOfPublication = scanner.nextInt();
                 scanner.nextLine();
-                validYear = true; // Eingabe ist gültig
+                if (yearOfPublication >= 1900 && yearOfPublication <= 2025) {
+                    validYear = true; // Eingabe ist gültig
+                }
             } catch (InputMismatchException e) {
                 System.out.println("Fehler: Ungültige Eingabe. Bitte ein gültiges Jahr eingeben.");
                 scanner.nextLine(); // Ungültige Eingabe aus dem Puffer entfernen
@@ -78,7 +80,7 @@ public class UserInterface {
         System.out.println("Titel des zu entfernenden Buches: ");
         String removeTitle = scanner.nextLine();
         if (library.removeBook(removeTitle)) {
-            database.removeBookFromDatabse(removeTitle);
+            database.removeBookFromDatabase(removeTitle);
             Main.clear();
             System.out.println("Das Buch wurde erfolgreich entfernt!");
             System.out.println();

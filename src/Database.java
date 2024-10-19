@@ -69,11 +69,11 @@ public class Database {
         return books;
     }
 
-    public void removeBookFromDatabse(String title) {
+    public void removeBookFromDatabase(String title) {
         String sql = "DELETE FROM buecher WHERE titel = ?";
 
         try(Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, title);
             preparedStatement.executeUpdate();
 
