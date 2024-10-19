@@ -4,12 +4,14 @@ import java.util.List;
 public class Library {
 
     private final ArrayList<Book> listOfBooks;
+    private final Database database;
 
-    public Library() {
+    public Library(Database database) {
         listOfBooks = new ArrayList<>();
+        this.database = database;
 
         // Bücher aus der Datei werden in Objekte geladen und in die ArrayListe hinzugefügt.
-        List<Book> loadedBooks = FileManager.loadBooksFromFile("books.dat");
+        List<Book> loadedBooks = database.getAllBooksFromDatabase();
         if (loadedBooks != null) {
             for (Book book : loadedBooks) {
                 this.addBook(book);
@@ -37,7 +39,7 @@ public class Library {
     }
 
     public void displayBooks() {
-        List<Book> loadedBooks = FileManager.loadBooksFromFile("books.dat");
+        List<Book> loadedBooks = database.getAllBooksFromDatabase();
 
         if (loadedBooks != null) {
             for (Book book : loadedBooks) {

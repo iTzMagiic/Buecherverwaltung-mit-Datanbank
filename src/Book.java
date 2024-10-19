@@ -17,6 +17,7 @@ public class Book implements Serializable {
     private final int yearOfPublication;
 
 
+
     public Book(String title, String author, int yearOfPublication) {
 
         if (title == null || title.trim().isEmpty()) {

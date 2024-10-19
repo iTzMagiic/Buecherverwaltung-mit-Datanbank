@@ -4,10 +4,19 @@ import java.util.Scanner;
 public class UserInterface {
 
     private final Scanner scanner;
+    private final Library library;
+    private final Database database;
 
-    public UserInterface() {
+
+
+    public UserInterface(Library library, Database database) {
+        this.library = library;
         this.scanner = new Scanner(System.in);
+        this.database = database;
     }
+
+
+
 
     public int getMenuChoice() {
         System.out.println("Willkommen zu der Bücherverwaltung.");
@@ -18,18 +27,66 @@ public class UserInterface {
         System.out.println("Wähle eine Option");
 
         int choice = 0;
-        try  {
-            choice = scanner.nextInt();
-            // Das nextLine() fängt den verbleibenden Zeilenumbruch nach der Eingabe einer Zahl ab.
-            // Der Aufruf von nextInt() liest nur die Zahl (z.B. 8) ein, aber der
-            // Zeilenumbruch ('\n') bleibt im Eingabepuffer.
-            // Dieser Zeilenumbruch muss entfernt werden, weil er sonst von einem nachfolgenden
-            // nextLine()-Aufruf als leere Eingabe interpretiert werden könnte.
-            scanner.nextLine();
-        } catch (InputMismatchException e) {
-            System.out.println("Fehler: Ungültige Eingabe.");
-            scanner.nextLine();
+        boolean validInput = false;
+        while (!validInput) {
+            try  {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Leere Zeile abfangen
+                validInput = true; // Eingabe ist gültig
+            } catch (InputMismatchException e) {
+                System.out.println("Fehler: Ungültige Eingabe. Bitte eine Zahl eingeben.");
+                scanner.nextLine(); // Ungültige Eingabe aus dem Puffer entfernen
+            }
         }
         return choice;
     }
+
+
+    public void addBook() {
+        Main.clear();
+        System.out.println("Titel des Buches: ");
+        String title = scanner.nextLine();
+        System.out.println("Autor des Buches: ");
+        String author = scanner.nextLine();
+
+        int yearOfPublication = 0;
+        boolean validYear = false;
+        while (!validYear) {
+            try {
+                System.out.println("Erscheinungsjahr: ");
+                yearOfPublication = scanner.nextInt();
+                scanner.nextLine();
+                validYear = true; // Eingabe ist gültig
+            } catch (InputMismatchException e) {
+                System.out.println("Fehler: Ungültige Eingabe. Bitte ein gültiges Jahr eingeben.");
+                scanner.nextLine(); // Ungültige Eingabe aus dem Puffer entfernen
+            }
+        }
+
+        Book newBook = new Book(title, author, yearOfPublication);
+        database.addBookToDatabase(title, author, yearOfPublication);
+        library.addBook(newBook);
+
+        Main.clear();
+        System.out.println("Das Buch wurde erfolgreich hinzugefügt.");
+        System.out.println();
+    }
+
+
+    public void removeBook() {
+        Main.clear();
+        System.out.println("Titel des zu entfernenden Buches: ");
+        String removeTitle = scanner.nextLine();
+        if (library.removeBook(removeTitle)) {
+            database.removeBookFromDatabse(removeTitle);
+            Main.clear();
+            System.out.println("Das Buch wurde erfolgreich entfernt!");
+            System.out.println();
+        } else {
+            Main.clear();
+            System.out.println("Ungültiger Titel, das Buch konnte nicht gefunden werden.");
+            System.out.println();
+        }
+    }
+
 }
