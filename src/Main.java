@@ -1,7 +1,7 @@
 
 /* Todo
-- Mehr Modularisieren die try-catch in Extra Module zum Überprüfen ob die Eingaben Valide sind
-- FileManager gegen Database austauschen
+- Mehr auskommentieren !! VOR ALLEM BEI DER KLASSE DATABASE
+- Informieren wie man bei Benutzer nur deren Bücher ausgibt bzw. evt. mit eigenen Accounts 
  */
 
 public class Main {
