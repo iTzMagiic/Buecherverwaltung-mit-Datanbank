@@ -10,6 +10,8 @@
             mind. 4 Zeichen lang
 - Database Methoden getUserID(), createUser(), getUserName() Definieren
 
+-* Passwörter hashen mit bcrypt bsp. bevor es in Datenbanken eingefügt wird.
+-* Protokollierungssystem einrichten mit Logger
 -* Überlegung Benutzer einem Objekt zuweisen für eine Session ? public class User?
 
  */
@@ -26,24 +28,25 @@ public class Main {
 
         clear();
         int userID = user.getLoginMenu();
-        clear();
+
 
 
         while (running) {
+            clear();
             choice = user.getMenuChoice(userID);
 
             switch (choice) {
                 case 1:         // hinzufügen
-                    user.addBook();
+                    user.addBook(userID);
                     break;
 
                 case 2:             // entfernen
-                    user.removeBook();
+                    user.removeBook(userID);
                     break;
 
                 case 3:             // anzeigen
                     clear();
-                    library.displayBooks();
+                    library.displayBooks(userID);
                     break;
 
                 case 4:         // beenden

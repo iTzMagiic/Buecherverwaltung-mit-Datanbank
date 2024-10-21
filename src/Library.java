@@ -11,12 +11,12 @@ public class Library {
         this.database = database;
 
         // Bücher aus der Datei werden in Objekte geladen und in die ArrayListe hinzugefügt.
-        List<Book> loadedBooks = database.getAllBooksFromDatabase();
-        if (loadedBooks != null) {
-            for (Book book : loadedBooks) {
-                this.addBook(book);
-            }
-        }
+//        List<Book> loadedBooks = database.getAllBooksFromDatabase(userID);
+//        if (loadedBooks != null) {
+//            for (Book book : loadedBooks) {
+//                this.addBook(book);
+//            }
+//        }
     }
 
 
@@ -38,8 +38,8 @@ public class Library {
         return listOfBooks.removeIf(currentBook -> currentBook.getTitle().toLowerCase().equals(title.toLowerCase().trim()));
     }
 
-    public void displayBooks() {
-        List<Book> loadedBooks = database.getAllBooksFromDatabase();
+    public void displayBooks(int userID) {
+        List<Book> loadedBooks = database.getAllBooksFromDatabase(userID);
 
         if (loadedBooks != null) {
             for (Book book : loadedBooks) {
