@@ -22,7 +22,7 @@ public class Database {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Verbindung fehlgeschlagen!");
+            System.out.println("Verbindung zur Datenbank fehlgeschlagen!");
         }
         return connection; // Verbindung zurückgeben
     }
@@ -82,6 +82,26 @@ public class Database {
         catch (SQLException e) {
             System.out.println("Fehler beim Löschen der Bücher: " + e.getMessage());
         }
+    }
+
+    public int getUserID(String username, String password) {
+        int userID = 0;
+
+        // den Primary Key von dem Benutzer wiedergeben wenn einer Erstellt ist
+
+        return userID;
+    }
+
+    public int createUser(String user, String password) {
+        int userID = 0;
+
+        // einen Benutzer in die Datenbank schreiben bzw. Account erstellen lassen
+
+        return userID;
+    }
+
+    public String getUserName(int userID) {
+        return null;
     }
 
 
