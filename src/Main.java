@@ -1,5 +1,7 @@
 
 /* Todo
+- Buch Löschung überarbeiten da man keine Bücher Löschen kann
+
 - Mehr auskommentieren !! VOR ALLEM BEI DER KLASSE DATABASE & USERINTERFACE
 - UserInterface Methode getLoginMenu() verbessern
     Anforderungen setzten für Passwörter und Benutzernamen

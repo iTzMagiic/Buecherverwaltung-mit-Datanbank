@@ -142,6 +142,7 @@ public class Database {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, username);
             preparedStatement.setString(3, password);
+            // executeUpdate() wird verwendet, um Daten zu verändern (INSERT, UPDATE, DELETE-Anweisung)
             preparedStatement.executeUpdate();
 
             return true;
@@ -151,6 +152,7 @@ public class Database {
         return false;
     }
 
+
     public String getUserName(int userID) {
         String sql = "SELECT name FROM benutzer WHERE idbenutzer = ?";
         String name;
@@ -159,9 +161,18 @@ public class Database {
         try(Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, userID);
+            // executeQuery() wird verwendet, um Daten abzufragen (SELECT-Anweisung)
             resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()) {
+                // ResultSet kann man sich wie ein Assoziatives Array Vorstellen, was alle Zeilen meiner Abfrage
+                // von preparedStatement.executeQuery() abspeichert und man mit dem key "name" das, Value dort drin
+                // ausgibt, unten ein beispiel wie es aussieht in einem ResultSet
+                /*
+                idbenutzer	    name	        email
+                1	            Alice	    alice@mail.com
+                2	            Bob	        bob@mail.com
+                 */
                 name = resultSet.getString("name");
                 return name;
             }
