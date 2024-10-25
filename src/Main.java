@@ -11,6 +11,9 @@
         Passwort
             mind. 4 Zeichen lang
 - Database Methoden getUserID(), createUser(), getUserName() Definieren
+- Lobrary muss die Bücher geladen bekommen bevor man die löscht evtl. in dem Konstruktor
+mit der Datenbank Methode getAllBooksFromDatabase;
+    Prüfen ob Fehler entstehen wenn Datenbank Leer ist und was Abgespeichert wird wenn Leer
 
 -* Passwörter hashen mit bcrypt bsp. bevor es in Datenbanken eingefügt wird.
 -* Protokollierungssystem einrichten mit Logger
@@ -38,7 +41,7 @@ public class Main {
             choice = user.getMenuChoice(userID);
 
             switch (choice) {
-                case 1:         // hinzufügen
+                case 1:             // hinzufügen
                     user.addBook(userID);
                     break;
 
@@ -51,11 +54,11 @@ public class Main {
                     library.displayBooks(userID);
                     break;
 
-                case 4:         // beenden
+                case 4:             // Login
                     clear();
                     userID = user.getLoginMenu();
                     break;
-                case 5:
+                case 5:             // beenden
                     System.out.println();
                     running = false;
                     System.out.println("Programm wird beendet...");
