@@ -9,14 +9,6 @@ public class Library {
     public Library(Database database) {
         listOfBooks = new ArrayList<>();
         this.database = database;
-
-        // Bücher aus der Datei werden in Objekte geladen und in die ArrayListe hinzugefügt.
-//        List<Book> loadedBooks = database.getAllBooksFromDatabase(userID);
-//        if (loadedBooks != null) {
-//            for (Book book : loadedBooks) {
-//                this.addBook(book);
-//            }
-//        }
     }
 
 

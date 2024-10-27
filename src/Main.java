@@ -1,20 +1,13 @@
 
 /* Todo
-- Buch Löschung überarbeiten da man keine Bücher Löschen kann
 
 - Mehr auskommentieren !! VOR ALLEM BEI DER KLASSE DATABASE & USERINTERFACE
 - UserInterface Methode getLoginMenu() verbessern
-    Anforderungen setzten für Passwörter und Benutzernamen
-        Benutzername
-            Keine Sonderzeichen
-            mind. 4 Zeichen lang
-        Passwort
-            mind. 4 Zeichen lang
-- Database Methoden getUserID(), createUser(), getUserName() Definieren
-- Lobrary muss die Bücher geladen bekommen bevor man die löscht evtl. in dem Konstruktor
-mit der Datenbank Methode getAllBooksFromDatabase;
-    Prüfen ob Fehler entstehen wenn Datenbank Leer ist und was Abgespeichert wird wenn Leer
+    -Mehr Modularisieren !!!
+    -Abfrage ob Benutzer Account erstellen möchte in einer Extra Methode getLoginChoice()
+    -getLoginMenu() soll aus Switch Cases bestehen, wie die Main.
 
+-* Methode um einen Account zu löschen
 -* Passwörter hashen mit bcrypt bsp. bevor es in Datenbanken eingefügt wird.
 -* Protokollierungssystem einrichten mit Logger
 -* Überlegung Benutzer einem Objekt zuweisen für eine Session ? public class User?
@@ -33,7 +26,7 @@ public class Main {
 
         clear();
         int userID = user.getLoginMenu();
-
+        user.loadBooks(userID);
 
 
         while (running) {
