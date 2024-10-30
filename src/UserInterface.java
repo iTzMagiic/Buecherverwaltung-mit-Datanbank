@@ -16,121 +16,168 @@ public class UserInterface {
     }
 
 
-    public int getLoginMenu() {
-        System.out.println("Willkommen bei der Bücherverwaltung von ItzMagiic");
-
-        boolean allowed = false;
-
-        String password;
+    public int createAccount() {
         String username;
+        String password;
         String name;
-        int userID = 0;
 
-        while (!allowed) {
-            System.out.println("Falls Sie neu sind, geben Sie bitte 1 ein, um sich ein Account zu erstellen.");
+        while (true) {
+            System.out.println("Wie ist Ihr Name?");
+            name = scanner.nextLine();
+
+            if (!Rules.isNameValid(name)) {
+                Main.clear();
+                System.out.println("Der Name darf nur Buchstaben enthalten und nicht Leer sein.");
+                continue;
+            }
+            Main.clear();
+            break;
+        }
+        // Ersten Buchstaben des Namen in groß umwandeln
+        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+
+        System.out.println("\nWillkommen, " + name + "!");
+        System.out.println("Welchen Benutzernamen möchten Sie verwenden?");
+
+        while (true) {
+            System.out.println("Der Benutzername darf nur Buchstaben, Zahlen enthalten und mindestens 4 Zeichen lang sein.");
             System.out.println("Zum Abbrechen 2 eingeben.");
-            System.out.println("Benutzername/Eingabe: ");
             username = scanner.nextLine();
 
-            if (username.equals("1")) { // NEUEN ACCOUNT ERSTELLEN
-                boolean createdUser = false;
+            if (username.equals("2")) {
                 Main.clear();
+                return -1;
+            }
 
-                while (!createdUser) {
-                    System.out.println("Wie ist Ihr Name?");
-                    name = scanner.nextLine();
+            if (!Rules.isUsernameValid(username)) {
+                Main.clear();
+                System.out.println("Der Benutzername ist ungültig.");
+                continue;
+            }
 
-                    if (!Rules.isNameValid(name)) {
-                        Main.clear();
-                        System.out.println("Der Name darf nur Buchstaben enthalten und nicht Leer sein.");
-                        continue;
-                    }
+            Main.clear();
 
+            if (database.validUsername(username)) {
+                System.out.println("Der Benutzername ist schon vergeben " + name + ", Tut uns leid," +
+                        " versuche es nochmal.\n");
+                continue;
+            }
+            System.out.println("Super der Benutzername ist noch verfügbar!");
+            break;
+        }
+
+        System.out.println("Nun benötigen wir noch ein sicheres Passwort, damit nur Sie Zugriff auf Ihre Bücher haben.");
+
+        while (true) {
+            System.out.println("Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.");
+            System.out.println("Zum Abbrechen 2 eingeben.");
+            password = scanner.nextLine();
+
+            if (password.equals("2")) {
+                Main.clear();
+                return -1;
+            }
+
+            if (Rules.isPasswordValid(password)) {
+                // Prüfen, ob Benutzer erfolgreich erstellt wurde
+                if (database.createUser(name, username, password)) {
                     Main.clear();
-                    System.out.println("\nWillkommen, " + name + "!");
-                    System.out.println("Welchen Benutzernamen möchten Sie verwenden?");
-
-                    boolean usernameAllowed = false;
-                    while (!usernameAllowed) {
-                        System.out.println("Der Benutzername darf nur Buchstaben, Zahlen enthalten und mindestens 4 Zeichen lang sein.");
-                        System.out.println("Zum Abbrechen 2 eingeben.");
-                        username = scanner.nextLine();
-
-                        if (username.equals("2")) {
-                            Main.clear();
-                            createdUser = true;
-                            usernameAllowed = true;
-                            continue;
-                        }
-
-                        if (!Rules.isUsernameValid(username)) {
-                            Main.clear();
-                            System.out.println("Der Benutzername ist ungültig.");
-                            continue;
-                        }
-
-                        Main.clear();
-                        System.out.println("\nToller Benutzername! Wir prüfen nun, ob dieser noch verfügbar ist...");
-
-                        if (!database.validUsername(username)) {
-                            Main.clear();
-                            System.out.println("Der Benutzername ist schon vergeben " + name + ", Tut uns leid," +
-                                    " versuche es nochmal.\n");
-                            continue;
-                        }
-                        System.out.println("Super der Benutzername ist noch verfügbar!");
-                        usernameAllowed = true;
-                    }
-                    if (username.equals("2")) {
-                        continue;
-                    }
-
-                    System.out.println("Nun benötigen wir noch ein sicheres Passwort, damit nur Sie Zugriff auf Ihre Bücher haben.");
-
-                    boolean passwordAllowed = false;
-                    while (!passwordAllowed) {
-                        System.out.println("Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.");
-                        System.out.println("Zum Abbrechen 2 eingeben.");
-                        password = scanner.nextLine();
-
-                        if (password.equals("2")) {
-                            Main.clear();
-                            createdUser = true;
-                            passwordAllowed = true;
-                            continue;
-                        }
-
-                        if (Rules.isPasswordValid(password)) {
-                            // Prüfen, ob Benutzer erfolgreich erstellt wurde
-                            if (database.createUser(name, username, password)) {
-                                System.out.println("Herzlichen Glückwunsch, " + name + "! Ihr Account wurde erfolgreich erstellt.");
-                                return database.getUserID(username, password);
-                            } else {
-                                System.out.println("Ein Fehler ist aufgetreten, der Benutzer konnte leider nicht erstellt werden." +
-                                        " Bitte versuchen Sie es erneut, " + name + ".\n");
-                            }
-                        }
-                        Main.clear();
-                    }
-                }
-
-            } else if (username.equals("2")) {
-                return -1; // Abbruch wird durch -1 signalisiert
-            } else {
-                System.out.println("Passwort: ");
-                password = scanner.nextLine();
-
-                userID = database.getUserID(username, password);
-                if (userID != -1) {
-                    return userID;
+                    System.out.println("Herzlichen Glückwunsch, " + name + "! Ihr Account wurde erfolgreich erstellt.\n");
+                    return database.getUserID(username, password);
+                } else {
+                    System.out.println("Ein Fehler ist aufgetreten, der Benutzer konnte leider nicht erstellt werden." +
+                            " Bitte versuchen Sie es erneut, " + name + ".\n");
                 }
             }
+            Main.clear();
         }
-        return -1; // Standardmäßig Rückgabe -1, falls Abbruch oder ungültige Eingabe
     }
 
-    public int getLoginChoice() {
-        return -1;
+
+    public int login() {
+        String username;
+        String password;
+        int userID = -1;
+
+        // Benutzername abfragen und validieren
+        while (true) {
+            System.out.println("Benutzername: ");
+            System.out.println("Zum abbrechen 2 eingeben.");
+            username = scanner.nextLine();
+
+            if (username.equals("2")) {
+                return userID;
+            }
+            if (database.validUsername(username)) {
+                Main.clear();
+                break;
+            }
+            Main.clear();
+            System.out.println("Benutzername Existiert nicht!");
+        }
+
+        // Passwort abfragen und validieren
+        while (true) {
+            System.out.println("Passwort: ");
+            System.out.println("Zum abbrechen 2 eingeben.");
+            password = scanner.nextLine();
+
+            if (password.equals("2")) {
+                return userID;
+            }
+
+            userID = database.getUserID(username, password);
+
+            if (userID != -1) {
+                Main.clear();
+                return userID;
+            }
+            System.out.println("Falsches Passwort!");
+        }
+    }
+
+
+    public int getLoginMenu() {
+        int userID;
+        System.out.println("Willkommen bei der Bücherverwaltung von ItzMagiic.");
+
+        int input = 0;
+
+        while (true) {
+            System.out.println("Falls Sie neu sind, geben Sie bitte 1 ein.");
+            System.out.println("Für ein Bestehenden Account, geben Sie bitte 2 ein.");
+            System.out.println("Zum Abbrechen 3 eingeben.");
+            System.out.println("Eingabe: ");
+
+
+            try {
+                input = scanner.nextInt();
+                scanner.nextLine();
+            } catch (Exception e) {
+                scanner.nextLine();
+                System.out.println("Fehler: " + e.getMessage());
+            }
+
+            switch (input) {
+                case 1:
+                    Main.clear();
+                    userID = createAccount();
+                    if (userID != -1) {
+                        return userID;
+                    }
+                    break;
+                case 2:
+                    Main.clear();
+                    userID = login();
+                    if (userID != -1)
+                        return userID;
+                    break;
+                case 3:
+                    Main.clear();
+                    return -1;
+            }
+            Main.clear();
+        }
     }
 
 
@@ -154,7 +201,7 @@ public class UserInterface {
     public int getMenuChoice(int userID) {
         //System.out.println("Willkommen zu der Bücherverwaltung.");
         System.out.println("Hallo " + (database.getUserName(userID).equals("no user") ? "Anonym" : database.getUserName(userID)) + ".");
-        System.out.println("Was treibt Sie zu mir?");
+        System.out.println("Wonach suchen Sie?");
         System.out.println("1. Buch hinzufügen");
         System.out.println("2. Buch entfernen");
         System.out.println("3. Alle Bücher anzeigen");
@@ -163,12 +210,12 @@ public class UserInterface {
         System.out.println("Wähle eine Option");
 
         int choice = 0;
-        boolean validInput = false;
-        while (!validInput) {
+
+        while (true) {
             try {
                 choice = scanner.nextInt();
                 scanner.nextLine(); // Leere Zeile abfangen
-                validInput = true; // Eingabe ist gültig
+                break; // Eingabe ist gültig
             } catch (InputMismatchException e) {
                 System.out.println("Fehler: Ungültige Eingabe. Bitte eine Zahl eingeben.");
                 scanner.nextLine(); // Ungültige Eingabe aus dem Puffer entfernen

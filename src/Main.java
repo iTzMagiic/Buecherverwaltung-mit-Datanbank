@@ -2,10 +2,6 @@
 /* Todo
 
 - Mehr auskommentieren !! VOR ALLEM BEI DER KLASSE DATABASE & USERINTERFACE
-- UserInterface Methode getLoginMenu() verbessern
-    -Mehr Modularisieren !!!
-    -Abfrage ob Benutzer Account erstellen möchte in einer Extra Methode getLoginChoice()
-    -getLoginMenu() soll aus Switch Cases bestehen, wie die Main.
 
 -* Methode um einen Account zu löschen
 -* Passwörter hashen mit bcrypt bsp. bevor es in Datenbanken eingefügt wird.
@@ -30,7 +26,6 @@ public class Main {
 
 
         while (running) {
-            clear();
             choice = user.getMenuChoice(userID);
 
             switch (choice) {

@@ -106,7 +106,6 @@ public class Database {
                 userID = resultSet.getInt("idbenutzer");
                 return userID;
             } else {
-                System.out.println("Benuter nicht gefunden oder falsches Passwort.");
                 return -1;
             }
 
@@ -164,6 +163,9 @@ public class Database {
                 2	            Bob	        bob@mail.com
                  */
                 name = resultSet.getString("name");
+
+//                // Ersten Buchstaben des Namen in groß umwandeln
+//                name = name.substring(0, 1).toUpperCase() + name.substring(1);
                 return name;
             }
 
@@ -191,7 +193,7 @@ public class Database {
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return false;
+                return true;
             }
         } catch (SQLException e) {
             System.out.println("Fehler beim Abrufen des Benutzernamen: " + e.getMessage());
@@ -204,7 +206,7 @@ public class Database {
                 }
             }
         }
-        return true;
+        return false;
     }
 
 
