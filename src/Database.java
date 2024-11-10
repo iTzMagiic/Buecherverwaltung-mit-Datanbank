@@ -9,7 +9,7 @@ public class Database {
     private static final String PASSWORD = "i$@D9H0JYJQdFk!Zwi6DukUPj";
 
 
-    public static Connection getConnection() {
+    public static Connection createConnection() {
         Connection connection = null;
         try {
             // Hier verwenden wir die Methode aus der DatabaseConnection-Klasse
@@ -25,7 +25,7 @@ public class Database {
         return connection; // Verbindung zurückgeben
     }
 
-    public void addBookToDatabase(String title, String author, int yearOfPublication, int userID) {
+    public void addBook(String title, String author, int yearOfPublication, int userID) {
         String sql = "INSERT INTO buecher (titel, autor, erscheinungsjahr, idbenutzer) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -43,7 +43,7 @@ public class Database {
         }
     }
 
-    public List<Book> getAllBooksFromDatabase(int userID) {
+    public List<Book> getAllBooks(int userID) {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT titel, autor, erscheinungsjahr FROM buecher WHERE idbenutzer = ?";
         ResultSet resultSet = null;
@@ -76,7 +76,7 @@ public class Database {
         return books;
     }
 
-    public void removeBookFromDatabase(String title, int userID) {
+    public void removeBook(String title, int userID) {
         String sql = "DELETE FROM buecher WHERE titel = ?";
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -142,7 +142,7 @@ public class Database {
         return false;
     }
 
-    public String getUserName(int userID) {
+    public String getName(int userID) {
         String sql = "SELECT name FROM benutzer WHERE idbenutzer = ?";
         String name;
         ResultSet resultSet = null;

@@ -186,7 +186,7 @@ public class UserInterface {
             return;
         }
 
-        final List<Book> listOfBooks = database.getAllBooksFromDatabase(userID);
+        final List<Book> listOfBooks = database.getAllBooks(userID);
 
         if (listOfBooks.isEmpty()) {
             return;
@@ -200,7 +200,7 @@ public class UserInterface {
 
     public int getMenuChoice(int userID) {
         //System.out.println("Willkommen zu der Bücherverwaltung.");
-        System.out.println("Hallo " + (database.getUserName(userID).equals("no user") ? "Anonym" : database.getUserName(userID)) + ".");
+        System.out.println("Hallo " + (database.getName(userID).equals("no user") ? "Anonym" : database.getName(userID)) + ".");
         System.out.println("Wonach suchen Sie?");
         System.out.println("1. Buch hinzufügen");
         System.out.println("2. Buch entfernen");
@@ -226,7 +226,7 @@ public class UserInterface {
 
 
     public void addBook(int userID) {
-        if (Database.getConnection() != null) {
+        if (Database.createConnection() != null) {
             Main.clear();
             System.out.println("Titel des Buches: ");
             String title = scanner.nextLine();
@@ -250,7 +250,7 @@ public class UserInterface {
             }
 
             Book newBook = new Book(title, author, yearOfPublication);
-            database.addBookToDatabase(title, author, yearOfPublication, userID);
+            database.addBook(title, author, yearOfPublication, userID);
             library.addBook(newBook);
 
             Main.clear();
@@ -261,12 +261,12 @@ public class UserInterface {
 
 
     public void removeBook(int userID) {
-        if (Database.getConnection() != null) {
+        if (Database.createConnection() != null) {
             Main.clear();
             System.out.println("Titel des zu entfernenden Buches: ");
             String removeTitle = scanner.nextLine();
             if (library.removeBook(removeTitle)) {
-                database.removeBookFromDatabase(removeTitle, userID);
+                database.removeBook(removeTitle, userID);
                 Main.clear();
                 System.out.println("Das Buch wurde erfolgreich entfernt!");
                 System.out.println();

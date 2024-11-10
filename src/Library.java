@@ -31,7 +31,7 @@ public class Library {
     }
 
     public void displayBooks(int userID) {
-        List<Book> loadedBooks = database.getAllBooksFromDatabase(userID);
+        List<Book> loadedBooks = database.getAllBooks(userID);
 
         if (loadedBooks != null) {
             for (Book book : loadedBooks) {
