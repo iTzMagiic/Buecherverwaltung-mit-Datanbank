@@ -5,8 +5,8 @@ import java.util.List;
 public class Database {
 
     private static final String URL = "jdbc:mysql://localhost:3306/buecherverwaltung";
-    private static final String USER = "root";
-    private static final String PASSWORD = "i$@D9H0JYJQdFk!Zwi6DukUPj";
+    private static final String USER = "buecherverwaltung";
+    private static final String PASSWORD = "X(RL_{9yA#q,eTg?CZWJuX-";
 
 
     public static Connection createConnection() {
