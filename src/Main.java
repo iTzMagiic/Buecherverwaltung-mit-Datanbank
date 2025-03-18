@@ -1,14 +1,4 @@
 
-/* Todo
-
-- Mehr auskommentieren !! VOR ALLEM BEI DER KLASSE DATABASE & USERINTERFACE
-
--* Methode um einen Account zu löschen
--* Passwörter hashen mit bcrypt bsp. bevor es in Datenbanken eingefügt wird.
--* Protokollierungssystem einrichten mit Logger
--* Überlegung Benutzer einem Objekt zuweisen für eine Session ? public class User?
-
- */
 
 public class Main {
     public static void main(String[] args) {
