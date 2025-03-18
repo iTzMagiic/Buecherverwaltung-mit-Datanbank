@@ -1,13 +1,22 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class Database {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/buecherverwaltung";
-    private static final String USER = "buecherverwaltung";
-    private static final String PASSWORD = "X(RL_{9yA#q,eTg?CZWJuX-";
+    private static final String URL;
+    private static final String USER;
+    private static final String PASSWORD;
 
+
+    public Database() {
+        Dotenv dotenv = Dotenv.load();
+
+        this.URL = dotenv.get("DB_URL");
+        this.USER = dotenv.get("DB_USER");
+        this.PASSWORD = dotenv.get("DB_PASSWORD");
+    }
 
     public static Connection createConnection() {
         Connection connection = null;
